@@ -15,10 +15,13 @@ class ContactForm(forms.Form):
         widget=forms.RadioSelect(),
     )
     agree_terms = forms.BooleanField(required=True)
+    opt_in = forms.BooleanField(required=False)
 
-    marketing_source = forms.MultipleChoiceField(
+
+    marketing_source = forms.ChoiceField(
         required=False,
         choices=[
+            ('', 'Please select an option'),
             ('Social media', 'Social media'),
             ('Print or online news', 'Print or online news'),
             ('Bank', 'Bank (please specify which bank, below)'),
@@ -27,9 +30,9 @@ class ContactForm(forms.Form):
             ("Exporting is GREAT website", "Exporting is GREAT website"),
             ("Trade association", "Trade association"),
         ],
-        widget=forms.CheckboxSelectMultiple(),
+        widget=forms.Select(attrs={'class': 'form-control'}),
     )
-    other_source_bank = forms.CharField(required=False, widget=forms.Textarea(attrs={'class': 'form-control','rows': 5, 'cols': 50}))
+    other_source_bank = forms.CharField(required=False, widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 5, 'cols': 50}))
 
     def clean(self):
         cleaned_data = super().clean()

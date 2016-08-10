@@ -132,15 +132,11 @@
         </div>
 
         <fieldset>
+          <h3 class="heading-medium">Where did you hear about the directory?</h3>
           <legend class="visually-hidden">Where did you hear about the directory?</legend>
-          <h2 class="heading-large">Where did you hear about the directory?</h2>
           <div class="form-group">
-            {% for checkbox in form.marketing_source %}
-              <label for="{{ checkbox.id_for_label }}" class="block-label">
-                {{ checkbox.tag }}
-                {{ checkbox.choice_label }}
-              </label>
-            {% endfor %}
+            <label class="heading-medium visually-hidden">Select how you heard about us.</label>
+            {{ form.marketing_source }}
           </div>
           <label class="form-label" for="company-name">
             Other or bank name
@@ -162,6 +158,10 @@
               I understand the terms of use, I’m happy to submit my information and to be contacted about my application and the development of the directory
             </label>
           </div>
+          <label class="block-label" for="keep-informed">
+            <input id="keep-informed" name="opt_in" type="checkbox" value="agree"{% if form.opt_in.value == True %} checked{% endif %}>
+            Tick this box to receive messages about Department for International Trade’s other campaigns and services to support UK exporters (optional)
+          </label>
         </fieldset>
 
         <input class="button save-button" type="submit" value="Submit">
