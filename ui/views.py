@@ -5,9 +5,11 @@ from django.shortcuts import redirect
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic import TemplateView, FormView
 from django.utils.cache import patch_response_headers
+from django.template.response import TemplateResponse
 
 from alice.helpers import rabbit
-from ui.forms import ContactForm
+from ui.forms import CompanyFinder, ContactForm
+from ui.helpers import search_companies
 
 
 class CacheMixin(object):
@@ -47,3 +49,13 @@ class IndexView(CacheMixin, FormView):
             return redirect("problem")
 
         return super().form_valid(form)
+
+
+class CompanyFinder(FormView):
+    template_name = "onboarding/company_finder.html"
+    form_class = CompanyFinder
+
+    def form_valid(self, form):
+        results = search_companies(term=form.cleaned_data['term'])
+        context = {'results': results}
+        return TemplateResponse(self.request, self.template_name, context)
