@@ -2,7 +2,7 @@ from unittest import mock
 import http
 
 from django.core.urlresolvers import reverse
-from django.test import RequestFactory, override_settings
+from django.test import override_settings
 import pytest
 
 from ui.views import CompanyFinder, IndexView
@@ -22,19 +22,23 @@ VALID_REQUEST_DATA = {
     "email_address2": "test@example.com"
 }
 
+
 @pytest.fixture
 def search_results():
     return [{'label': 'company', 'id': 1}]
+
 
 @pytest.fixture
 def request_search_valid_bbc(rf):
     url = reverse('onboarding-find-company')
     return rf.post(url, {'term': 'BBC'})
 
+
 @pytest.fixture
 def request_search_invalid(rf):
     url = reverse('onboarding-find-company')
     return rf.post(url, {'terms': ''})
+
 
 @override_settings(DATA_SERVER='test')
 def test_index_view_create(rf):
@@ -65,10 +69,11 @@ def test_company_finder_form_valid_exposes_results(
     assert response.status_code == http.client.OK
     assert response.context_data['results'] == search_results
 
+
 @mock.patch('ui.views.search_companies')
 def test_company_finder_passes_form_data_to_search(
     mock_search_companies, request_search_valid_bbc
 ):
     view = CompanyFinder.as_view()
-    response = view(request_search_valid_bbc)
+    view(request_search_valid_bbc)
     assert mock_search_companies.called_with(term='BBC')
