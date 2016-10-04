@@ -1,9 +1,10 @@
-from unittest import mock
 import http
+from unittest import mock
+
+import pytest
 
 from django.core.urlresolvers import reverse
 from django.test import override_settings
-import pytest
 
 from ui.views import CompanyFinder, IndexView
 
@@ -30,13 +31,13 @@ def search_results():
 
 @pytest.fixture
 def request_search_valid_bbc(rf):
-    url = reverse('onboarding-find-company')
+    url = reverse('register-find-company')
     return rf.post(url, {'term': 'BBC'})
 
 
 @pytest.fixture
 def request_search_invalid(rf):
-    url = reverse('onboarding-find-company')
+    url = reverse('register-find-company')
     return rf.post(url, {'terms': ''})
 
 

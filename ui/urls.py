@@ -27,6 +27,6 @@ urlpatterns = [
 
     url(r"^step1$",
         CompanyFinder.as_view(),
-        name="onboarding-find-company"),
+        name="register-find-company"),
 
 ]
