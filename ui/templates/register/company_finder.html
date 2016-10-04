@@ -1,0 +1,12 @@
+<form action="{% url 'register-find-company' %}" method="post">
+	<input type="text" name="term"/>
+	<button>submit</button> 
+</form>
+
+<ul>
+{% for result in results %}
+	<li><a>{{result.label}}</li>
+{% endfor %}
+</ul>
+
+{{form.errors}}

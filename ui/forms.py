@@ -48,3 +48,7 @@ class ContactForm(forms.Form):
                     'Email addresses do not match',
                 )
         return cleaned_data
+
+
+class CompanyFinder(forms.Form):
+    term = forms.CharField(required=True)
